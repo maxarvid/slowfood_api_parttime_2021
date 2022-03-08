@@ -1,5 +1,5 @@
 class Api::OrdersController < ApplicationController
-  
+  before_action :authenticate_user!, only: [:create]
   rescue_from ActiveRecord::RecordNotFound, with: :product_not_found
 
   def create
@@ -10,7 +10,8 @@ class Api::OrdersController < ApplicationController
   end
 
   private
-   def product_not_found
-    render json: { message: "we could not find the product you tried to add." }, status: 404
+
+  def product_not_found
+    render json: { message: 'we could not find the product you tried to add.' }, status: 404
   end
 end
